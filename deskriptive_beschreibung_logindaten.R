@@ -42,13 +42,13 @@ boxplot(df_light$anzahl_login_user,
         ylab = "Anzahl Logins",
         col = "lightblue")
 
-q <- quantile(df_light$anzahl_login_user, probs = c(0.25, 0.75), na.rm = TRUE)
+q <- quantile(df_user_distinct$anzahl_login_user, probs = c(0.25, 0.75), na.rm = TRUE)
 iqr <- q[2] - q[1]
 untere_grenze <- q[1] - 1.5 * iqr
 obere_grenze <- q[2]+1.5*iqr
 
 
-subset_wO_Outliers <- df_light[df_light$anzahl_login_user <=  obere_grenze & df_light$anzahl_login_user >=  untere_grenze,]
+subset_wO_Outliers <- df_user_distinct[df_user_distinct$anzahl_login_user <=  obere_grenze & df_user_distinct$anzahl_login_user >=  untere_grenze,]
 boxplot(subset_wO_Outliers$anzahl_login_user,
         main = "Anzahl Logins pro User (ohne Ausreisser)",
         ylab = "Anzahl Logins",
