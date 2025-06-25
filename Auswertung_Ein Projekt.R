@@ -1,3 +1,4 @@
+#R-Script zur Auswertung der Kunden mit nur einem Projekt
 library(ggplot2)
 library(readxl)
 library(dplyr)
