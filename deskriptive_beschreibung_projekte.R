@@ -5,7 +5,7 @@ library(DescTools)
 
 #load project_data
 df_orig <- read_excel("C:/Users/maxwo/OneDrive/HWZ Applied Data Science/00_Leistungsausweis Zertifikatsarbeit/rohdaten/Anonymisierte Projektliste.xlsx")
-df_leistung <- read_excel("C:/Users/maxwo/OneDrive/HWZ Applied Data Science/00_Leistungsausweis Zertifikatsarbeit/rohdaten/Anonymisierte .xlsx")
+df_leistung <- read_excel("C:/Users/maxwo/OneDrive/HWZ Applied Data Science/00_Leistungsausweis Zertifikatsarbeit/rohdaten/Anonymisierte Leistungsdaten.xlsx")
 str(df_orig)
 str(df_leistung)
 
@@ -32,18 +32,13 @@ kennzahlenBerechner <- function(variable, kennzahl_name) {
 kennzahlenBerechner(df_light$anzahl_projekte_auf_kunde, "Anzahl Projekte pro Kunde")
 mean_anz_proj <- round(mean(df_light$anzahl_projekte_auf_kunde, na.rm = TRUE),2)
   
-  ggplot(data=df_light, aes(x= anzahl_projekte_auf_kunde))+
-    geom_histogram(binwidth = 1, fill="steelblue", color= "black")+
-    geom_vline(aes(xintercept = mean_anz_proj), color="red",linetype="dashed", size=1)+
-    annotate("text", x = mean_anz_proj+0.4, y=40,label=paste0("mean: ",round(mean_anz_proj,2)),color="red",vjust=1.5, angle=0)+
-    labs(title= "Verteilung der Anzahl Projekte pro Kunde", x= "Anzahl Projekte", y="Anzahl Kunden")
+ggplot(data=df_light, aes(x= anzahl_projekte_auf_kunde))+
+  geom_histogram(binwidth = 1, fill="steelblue", color= "black")+
+  geom_vline(aes(xintercept = mean_anz_proj), color="red",linetype="dashed", size=1)+
+  annotate("text", x = mean_anz_proj+0.4, y=40,label=paste0("mean: ",round(mean_anz_proj,2)),color="red",vjust=1.5, angle=0)+
+  labs(title= "Verteilung der Anzahl Projekte pro Kunde", x= "Anzahl Projekte", y="Anzahl Kunden")
   
-  
-  #Entscheidung 1: Kunden ausschliessen, mit mehr wie 4 Projekten
-  df_light2 <- df_light[df_light$anzahl_projekte_auf_kunde<=4,]
-  str(df_light2)
 
-  
 # Angefallene Stunden Aufwand pro Kunde
   subset_agg_h <- aggregate(aufwand_in_h ~ kunde, data = df_light, sum) #aggregierte Dienstleistungsstunden pro Kunden
 
@@ -107,8 +102,6 @@ mean_anz_proj <- round(mean(df_light$anzahl_projekte_auf_kunde, na.rm = TRUE),2)
   
   # Temporale Analyse: Startmonat
   df_light$startMonat <- format(df_light$erste_leistungsbuchung, "%Y-%m")
-  View(df_light)
-  
   
   df_startMonate <- df_light %>%
     count(startMonat)
@@ -126,14 +119,11 @@ mean_anz_proj <- round(mean(df_light$anzahl_projekte_auf_kunde, na.rm = TRUE),2)
   
   # Temporale Analyse: Abschlussmonat
   df_light$abschlussMonat <- format(df_light$letzte_leistungsbuchung, "%Y-%m")
-  View(df_light)
-  
   
   df_abschlussMonate <- df_light %>%
     count(abschlussMonat)
   
   str(df_abschlussMonate)
-  
   
   kennzahlenBerechner(df_abschlussMonate$n, "Kennzahlen abschliessende Projekte pro Monat")
   
