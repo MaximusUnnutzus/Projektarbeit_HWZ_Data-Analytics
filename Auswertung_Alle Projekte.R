@@ -216,21 +216,25 @@ plot_residuals <- function(model, x_var,log) {
   
 
 # Sonstige Plots, die Einsicht in den Zusammenhang potentieller Prädiktoren geben
-  ggplot(df, aes(x = erste_leistungsbuchung, y = projektdauer, color = under_budget)) +
-    geom_point() +
-    scale_color_manual(values = c("TRUE"="red","FALSE"="blue"))+
-    labs(title = "Total Angefallener Aufwand nach Projektdauer",
-         x = "Erste Leistungsbuchung", y = "Projektdauer (in Tagen)", color = "Unter Budget") +
-    scale_x_datetime(date_labels = "%m.%y", date_breaks = "1 month")
-  
 
-  ggplot(df, aes(x = anzahl_login_kunde, y = aufwand_in_h,
-                 color = anzahl_user)) +
-    geom_point(alpha = 0.6) +
-    scale_color_viridis_c() +
-    labs(
-      title = "Aufwand vs. Logins; Users als Farbe/Größe",
-      x = "Anzahl Logins", y = "Aufwand (h)",
-      color = "Anzahl User", size = "Anzahl User"
-    )
+df['projektdauer'] <- as.numeric(df$letzte_leistungsbuchung - df$erste_leistungsbuchung)
+df['under_budget'] <- (df$aufwand_in_chf -as.numeric(df$initiales_budget))<0
+
+ggplot(df, aes(x = erste_leistungsbuchung, y = projektdauer, color = under_budget)) +
+  geom_point() +
+  scale_color_manual(values = c("TRUE"="red","FALSE"="blue"))+
+  labs(title = "Total Angefallener Aufwand nach Projektdauer",
+       x = "Erste Leistungsbuchung", y = "Projektdauer (in Tagen)", color = "Unter Budget") +
+  scale_x_datetime(date_labels = "%m.%y", date_breaks = "1 month")
+
+
+ggplot(df, aes(x = anzahl_login_kunde, y = aufwand_in_h,
+               color = anzahl_user)) +
+  geom_point(alpha = 0.6) +
+  scale_color_viridis_c() +
+  labs(
+    title = "Aufwand vs. Logins; Users als Farbe/Größe",
+    x = "Anzahl Logins", y = "Aufwand (h)",
+    color = "Anzahl User", size = "Anzahl User"
+  )
   

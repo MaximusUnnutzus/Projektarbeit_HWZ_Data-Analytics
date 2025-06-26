@@ -121,3 +121,4 @@ plot_residuals <- function(model, x_var, log) {
   m1 <- lm(aufwand_in_h ~ anzahl_user + anzahl_login_kunde, data = df)
   summary(m1)
   
+  

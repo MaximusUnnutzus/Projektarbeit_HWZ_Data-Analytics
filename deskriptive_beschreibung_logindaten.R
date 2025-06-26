@@ -1,7 +1,6 @@
 library(ggplot2)
 library(readxl)
 library(dplyr)
-library(DescTools)
 
 #load project_data
 df_orig <- read_excel("C:/Users/maxwo/OneDrive/HWZ Applied Data Science/00_Leistungsausweis Zertifikatsarbeit/rohdaten/Anonymisierte Login.xlsx")
