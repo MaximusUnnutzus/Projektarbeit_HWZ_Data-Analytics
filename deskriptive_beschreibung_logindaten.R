@@ -37,7 +37,7 @@ df_user_distinct <- df_light %>%
 kennzahlenBerechner(df_user_distinct$anzahl_login_user, "Anzahl Logins pro User")
 
 par(mfrow = (c(1,2)))
-boxplot(df_light$anzahl_login_user,
+boxplot(df_user_distinct$anzahl_login_user,
         main = "Anzahl Logins pro User (mit Ausreisser)",
         ylab = "Anzahl Logins",
         col = "lightblue")
